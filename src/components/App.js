@@ -6,7 +6,7 @@ import instagramResponse from '../photos'
 
 class App extends Component {
   state = {
-    photos: instagramResponse
+    photos: instagramResponse.data
   }
   render() {
     return (
@@ -16,7 +16,20 @@ class App extends Component {
           <h1 className="App-title">React Photo Gallery</h1>
         </header>
         <div className="row">
-        {Object.keys(this.state.photos).map(photoKey => <Photo key={photoKey} keyName={photoKey} details={this.state.photos[photoKey]} />)}
+        {
+          Array.from(this.state.photos).map(function(photo){
+            return (
+              <Photo
+                key={photo.id}
+                keyName={photo}
+                image={photo.images.thumbnail.url}
+                username={photo.user.username}
+                commentCount={photo.comments.count}
+                caption={photo.caption.text}
+              />
+            )
+          })
+        }
 
         </div>
 
