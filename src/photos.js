@@ -4244,6 +4244,7 @@ const instagramResponse = {
   ]
 }
 
+// Replace blocked grammy pics with kittens
 const kittenUrls = ["http://www.thehonestkitchen.com/blog/wp-content/uploads/2016/02/iStock_000036609042_Medium-150x150.jpg",
  "http://www.ace-petnames.com/images/tabletinykitten.jpg",
  "https://www.vidlii.com/usfi/avt/P4qpzh4pgrY.jpg",
@@ -4320,18 +4321,16 @@ const kittenUrls = ["http://www.thehonestkitchen.com/blog/wp-content/uploads/201
  "http://pets.tucatz.com/wp-content/uploads/2017/07/kitten_tabby-150x150.jpg",
  "http://www.bikersshop.info/wp-content/uploads/kitten-drawings-best-25-kitten-drawing-ideas-on-pinterest-happy-kitten-cute-1-150x150.jpg"]
 
-
-Array.from(instagramResponse.data).forEach(function(record){
-  record.images.low_resolution.url = 'https://placeimg.com/300/300/nature'
-})
-
-Array.from(instagramResponse.data).forEach(function(record){
+instagramResponse.data.forEach(function(record){
+  if(!record.caption){
+    record.caption = {}
+    record.caption.text = ""
+  }
   record.images.thumbnail.url = kittenUrls.pop()
+  record.images.standard_resolution.url = kittenUrls.length >= 1 ? kittenUrls.pop() : 'https://placeimg.com/650/650/nature'
+  record.images.low_resolution.url = kittenUrls.length >= 1 ? kittenUrls.pop() : 'https://placeimg.com/300/300/nature'
 })
 
-Array.from(instagramResponse.data).forEach(function(record){
-  record.images.standard_resolution.url = 'https://placeimg.com/640/640/tech'
-})
 
 
 export default instagramResponse
